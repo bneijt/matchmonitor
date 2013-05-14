@@ -1,6 +1,8 @@
 package nl.bneijt.matchmonitor;
 
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -26,7 +28,7 @@ class Application {
 
     public static void main(String[] args) throws Exception {
 
-        //Injector injector = Guice.createInjector(new ApplicationModule());
+        Injector injector = Guice.createInjector(new ApplicationModule());
 
         Server server = new Server(4000);
 
@@ -41,7 +43,7 @@ class Application {
         resource_handler.setDirectoriesListed(true);
         resource_handler.setWelcomeFiles(new String[]{"index.html"});
 
-        ServletHolder jerseyServlet = new ServletHolder("jersey-servlet", new ServletContainer(new ResourcesApplication()));
+        ServletHolder jerseyServlet = new ServletHolder("jersey-servlet", new ServletContainer(new ResourcesApplication(injector)));
         //jerseyServlet.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
         jerseyServlet.setInitParameter("com.sun.jersey.config.property.packages", "org.codehaus.jackson.jaxrs");
 

@@ -4,7 +4,7 @@ function  MonitorCtrl($scope, $http, $timeout) {
 
 
     $scope.scheduleUpdate = function() {
-      updateTimer = $timeout($scope.onUpdate,1000);
+      updateTimer = $timeout($scope.onUpdate, 5000);
       $scope.updates += 1;
     }
 
@@ -19,7 +19,7 @@ function  MonitorCtrl($scope, $http, $timeout) {
                 .error($scope.scheduleUpdate);
     }
 
-    var updateTimer = $timeout($scope.onUpdate,1000);
+    var updateTimer = $timeout($scope.onUpdate, 5000);
 
     $scope.stop = function(){
         $timeout.cancel(updateTimer);
