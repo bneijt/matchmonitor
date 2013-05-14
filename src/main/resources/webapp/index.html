@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/normalize-4.1.5.css">
+    <link rel="stylesheet" href="css/foundation-4.1.5.css">
+    <script type="text/javascript" async="" src="js/monitor.js"></script>
+    <script type="text/javascript" async="" src="js/angular-1.0.6.js"></script>
+    <title>Flash</title>
+</head>
+<body ng-app>
+    <div class="row">
+        <div class="large-12 columns" ng-controller="MonitorCtrl">
+            <h1>Match monitor</h1>
+
+            <h2>Uptime={{uptime}} Updates={{updates}}</h2>
+
+            <p>
+                <span ng-repeat="state in states">{{state.match}}:{{state.alive}}</span>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
