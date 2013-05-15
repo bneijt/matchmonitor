@@ -23,18 +23,18 @@ public class MonitorStateResource {
 
     public MonitorStateResource(Injector injector) {
         stateDatabase = injector.getInstance(StateDatabase.class);
-
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public MonitorState get() throws IOException {
         HashMap<String, MatchHistory> states = stateDatabase.copy();
-        MonitorState ms = new MonitorState();
+        MonitorState ms = MonitorState.emptyInstance();
+        Long now = System.currentTimeMillis();
         for (Map.Entry<String, MatchHistory> entry : states.entrySet()) {
             State s = new State();
             s.match = entry.getKey();
-            s.alive = entry.getValue().lastIntervalInsideHalfMean();
+            s.alive = entry.getValue().insideHalfMean(now);
             ms.states.add(s);
         }
         ms.upTime = stateDatabase.upTime();

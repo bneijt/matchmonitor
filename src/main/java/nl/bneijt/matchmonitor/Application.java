@@ -61,6 +61,8 @@ class Application {
             logger.error("Server could not be started", e);
         }
 
+        MatchSource matchSource = injector.getInstance(MatchSource.class);
+        matchSource.start();
         server.join();
     }
 }

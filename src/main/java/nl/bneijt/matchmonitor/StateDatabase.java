@@ -9,8 +9,7 @@ public class StateDatabase {
     private  HashMap<String, MatchHistory> historyOfMatches = new HashMap<>();
     private Long lastUpdate = 0l;
 
-    public void justMatched(String value) {
-        Long now = System.currentTimeMillis();
+    public void matched(Long now, String value) {
 
         synchronized (historyOfMatches) {
                if(historyOfMatches.containsKey(value)){
