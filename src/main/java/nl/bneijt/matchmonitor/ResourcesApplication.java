@@ -1,5 +1,6 @@
 package nl.bneijt.matchmonitor;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.google.inject.Injector;
 import nl.bneijt.matchmonitor.resources.MonitorStateResource;
 
@@ -17,9 +18,16 @@ public class ResourcesApplication extends Application {
     }
 
     @Override
+    public Set<Class<?>> getClasses() {
+        Set<Class<?>> s = new HashSet<Class<?>>();
+        s.add(JacksonJaxbJsonProvider.class);
+        return s;
+    }
+
+    @Override
     public Set<Object> getSingletons() {
         HashSet<Object> singletons = new HashSet<>();
-        singletons.add(new MonitorStateResource(injector));
+        singletons.add(injector.getInstance(MonitorStateResource.class));
         return singletons;
     }
 
