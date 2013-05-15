@@ -8,6 +8,12 @@ public class BoundedLongArray {
         data = new Long[maxSize];
     }
 
+    public BoundedLongArray(BoundedLongArray other) {
+        data = new Long[other.data.length];
+        System.arraycopy(other.data, 0, data, 0, other.data.length);
+        writeIndex = other.writeIndex;
+    }
+
     public void add(Long value) {
         writeIndex += 1;
         writeIndex = writeIndex % data.length;

@@ -13,6 +13,24 @@ public class BoundedLongArrayTest {
         BoundedLongArray boundedLongArray = new BoundedLongArray(20);
         assertThat(boundedLongArray.mean(), is(0l));
     }
+    @Test
+    public void meanOfNumberShouldBeMean() throws Exception {
+        BoundedLongArray boundedLongArray = new BoundedLongArray(3);
+        boundedLongArray.add(4l);
+        boundedLongArray.add(4l);
+        boundedLongArray.add(4l);
+        assertThat(boundedLongArray.mean(), is(4l));
+
+        boundedLongArray.add(1l);
+        boundedLongArray.add(1l);
+        boundedLongArray.add(1l);
+        assertThat(boundedLongArray.mean(), is(1l));
+
+        boundedLongArray.add(1l);
+        boundedLongArray.add(2l);
+        boundedLongArray.add(3l);
+        assertThat(boundedLongArray.mean(), is(2l));
+    }
 
     @Test
     public void meanOfSingleLongIsLastLong() throws Exception {

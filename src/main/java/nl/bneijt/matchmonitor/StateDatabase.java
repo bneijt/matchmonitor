@@ -3,6 +3,7 @@ package nl.bneijt.matchmonitor;
 import com.google.inject.Singleton;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Singleton
 public class StateDatabase {
@@ -13,18 +14,20 @@ public class StateDatabase {
 
         synchronized (historyOfMatches) {
                if(historyOfMatches.containsKey(value)){
-                  historyOfMatches.get(value).matched(now);
+                  historyOfMatches.get(value).matchedAgain(now);
                }   else {
-                   MatchHistory mh = new MatchHistory();
-                   mh.matched(now);
-                   historyOfMatches.put(value, mh);
+                   historyOfMatches.put(value, new MatchHistory(now));
                }
            }
         lastUpdate = now;
     }
     public HashMap<String, MatchHistory> copy() {
         synchronized (historyOfMatches) {
-            return new HashMap<>(historyOfMatches);
+            HashMap<String, MatchHistory> hm = new HashMap<>();
+            for (Map.Entry<String, MatchHistory> entry : historyOfMatches.entrySet()) {
+                hm.put(entry.getKey(), new MatchHistory(entry.getValue()));
+            }
+            return hm;
         }
     }
 
