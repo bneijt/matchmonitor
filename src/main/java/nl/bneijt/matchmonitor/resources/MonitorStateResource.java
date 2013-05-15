@@ -27,7 +27,7 @@ public class MonitorStateResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public MonitorState get() throws IOException {
-        logger.warn("Reading state from: {}", stateDatabase);
+        logger.debug("Reading state from: {}", stateDatabase);
         HashMap<String, MatchHistory> states = stateDatabase.copy();
         MonitorState ms = MonitorState.emptyInstance();
         Long now = System.currentTimeMillis();
@@ -37,7 +37,7 @@ public class MonitorStateResource {
             s.alive = entry.getValue().insideHalfMean(now);
             ms.states.add(s);
         }
-        ms.upTime = stateDatabase.upTime();
+        ms.lastUpdate = stateDatabase.lastUpdate();
         return ms;
     }
 }

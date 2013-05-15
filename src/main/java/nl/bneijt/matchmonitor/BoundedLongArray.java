@@ -9,7 +9,7 @@ public class BoundedLongArray {
     }
 
     public void add(Long value) {
-        ++writeIndex;
+        writeIndex += 1;
         writeIndex = writeIndex % data.length;
         data[writeIndex] = value;
     }
@@ -23,12 +23,13 @@ public class BoundedLongArray {
                 size += 1;
             }
         }
+        if(size == 0l) {
+            return sum;
+        }
         return sum / size;
     }
     public Long last() {
-        int lastIndex = writeIndex -1;
-        lastIndex = lastIndex % data.length;
-        return data[lastIndex];
+        return data[writeIndex];
     }
 
 }

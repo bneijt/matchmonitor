@@ -4,6 +4,7 @@ package nl.bneijt.matchmonitor;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
+import nl.bneijt.matchmonitor.processing.PacketContentsHandler;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
@@ -54,8 +55,10 @@ class Application {
         handlers.setHandlers(new Handler[]{resource_handler, context, new DefaultHandler()});
         server.setHandler(handlers);
 
-        MatchSource matchSource = injector.getInstance(MatchSource.class);
-        matchSource.start();
+
+
+        Thread udpServerThread = new Thread(new UDPServer(8081, injector.getInstance(PacketContentsHandler.class)));
+        udpServerThread.start();
 
         try {
             server.start();
@@ -64,5 +67,6 @@ class Application {
         }
 
         server.join();
+        udpServerThread.interrupt();
     }
 }

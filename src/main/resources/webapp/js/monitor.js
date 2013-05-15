@@ -9,8 +9,17 @@ function  MonitorCtrl($scope, $http, $timeout) {
     }
 
     function storeState(response) {
-        $scope.states = response.states;
-        $scope.uptime = response.uptime;
+
+        $scope.states = response.states.map(function(state) {
+            if(state.alive) {
+                state.class = "alive";
+            } else {
+                state.class = "notAlive";
+            }
+            return state;
+        });
+
+        $scope.lastUpdate = response.lastUpdate;
     }
 
     $scope.onUpdate = function(){

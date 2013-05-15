@@ -7,7 +7,7 @@ import java.util.List;
 @XmlRootElement
 public class MonitorState {
     public List<State> states;
-    public Long upTime;
+    public Long lastUpdate;
 
     public static MonitorState emptyInstance() {
         MonitorState ms = new MonitorState();

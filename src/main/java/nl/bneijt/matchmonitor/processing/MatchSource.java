@@ -1,6 +1,7 @@
-package nl.bneijt.matchmonitor;
+package nl.bneijt.matchmonitor.processing;
 
 import com.google.inject.Inject;
+import nl.bneijt.matchmonitor.StateDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,7 @@ public class MatchSource extends Thread {
     }
 
     private void randomSleep() {
-        int duration = random.nextInt(5000);
+        int duration = random.nextInt(1000);
         try {
             Thread.sleep(duration);
         } catch (InterruptedException e) {

@@ -6,19 +6,33 @@
     <link rel="stylesheet" href="css/foundation-4.1.5.css">
     <script type="text/javascript" async="" src="js/monitor.js"></script>
     <script type="text/javascript" async="" src="js/angular-1.0.6.js"></script>
+    <style>
+        .alive {
+            color: green;
+        }
+
+        .notAlive {
+            color: red;
+        }
+        .state {
+            border: 1px solid gray;
+            margin-left: 2px;
+            padding: 1px;
+        }
+    </style>
     <title>Matchmonitor</title>
 </head>
 <body ng-app>
-    <div class="row">
-        <div class="large-12 columns" ng-controller="MonitorCtrl">
-            <h1>Match monitor</h1>
+<div class="row">
+    <div class="large-12 columns" ng-controller="MonitorCtrl">
+        <h1>Match monitor</h1>
 
-            <h2>Uptime={{uptime}} Updates={{updates}}</h2>
+        <h2>lastUpdate={{lastUpdate}} Updates={{updates}}</h2>
 
-            <p>
-                <span ng-repeat="state in states">{{state}} {{state.match}}:{{state.alive}}</span>
-            </p>
-        </div>
+        <p>
+            <span ng-repeat="state in states" class="state {{state.class}}">{{state.match}}</span>
+        </p>
     </div>
+</div>
 </body>
 </html>

@@ -28,8 +28,7 @@ public class StateDatabase {
         }
     }
 
-    public Long upTime() {
+    public Long lastUpdate() {
         return new Long(lastUpdate);
-
     }
 }
