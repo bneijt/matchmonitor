@@ -44,7 +44,6 @@ class Application {
         resource_handler.setWelcomeFiles(new String[]{"index.html"});
 
         ServletHolder jerseyServlet = new ServletHolder("jersey-servlet", new ServletContainer(new ResourcesApplication(injector)));
-        //jerseyServlet.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
         jerseyServlet.setInitParameter("com.sun.jersey.config.property.packages", "org.codehaus.jackson.jaxrs");
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
@@ -55,14 +54,15 @@ class Application {
         handlers.setHandlers(new Handler[]{resource_handler, context, new DefaultHandler()});
         server.setHandler(handlers);
 
+        MatchSource matchSource = injector.getInstance(MatchSource.class);
+        matchSource.start();
+
         try {
             server.start();
         } catch (Exception e) {
             logger.error("Server could not be started", e);
         }
 
-        MatchSource matchSource = injector.getInstance(MatchSource.class);
-        matchSource.start();
         server.join();
     }
 }

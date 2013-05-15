@@ -11,16 +11,20 @@ public class MatchSource extends Thread {
     StateDatabase stateDatabase;
 
     Random random = new Random();
-    Logger logger = LoggerFactory.getLogger(Application.class);
+    Logger logger = LoggerFactory.getLogger(MatchSource.class);
 
     @Override
     public void run() {
         if (stateDatabase == null) {
-            throw new IllegalStateException("Should have an injected stateDatabase, use Guice");
+            IllegalStateException e = new IllegalStateException("Should have an injected stateDatabase, use Guice");
+            logger.error("Throwing {}", e);
+            throw e;
         }
         for (int i = 0; i < 100; ++i) {
             Long now = System.currentTimeMillis();
             stateDatabase.matched(now, "A");
+            randomSleep();
+            stateDatabase.matched(now, "B");
             randomSleep();
         }
     }
