@@ -8,11 +8,13 @@
     <script type="text/javascript" async="" src="js/angular-1.0.6.js"></script>
     <style>
         .alive {
-            color: green;
+            color: white;
+            background-color: gray;
         }
 
         .notAlive {
-            color: red;
+            color: white;
+            background-color: red;
         }
         .state {
             border: 1px solid gray;
@@ -27,7 +29,7 @@
     <div class="large-12 columns" ng-controller="MonitorCtrl">
         <h1>Match monitor</h1>
 
-        <h2>lastUpdate={{lastUpdate}} Updates={{updates}}</h2>
+        <p>lastUpdate={{lastUpdate}} Updates={{updates}}</p>
 
         <p>
             <span ng-repeat="state in states" class="state {{state.class}}">{{state.match}}</span>
