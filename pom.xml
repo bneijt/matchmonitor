@@ -7,7 +7,7 @@
     <groupId>nl.bneijt</groupId>
     <artifactId>matchmonitor</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <description>Web GUI to monitor matching UDP packets</description>
+    <description>Web GUI to monitor UDP packet frequency</description>
 
     <properties>
         <hamcrest.version>1.3.RC2</hamcrest.version>
@@ -19,24 +19,21 @@
         <connection>scm:git:git://example.com</connection>
     </scm>
     <dependencies>
-       <dependency>
-    <groupId>com.sun.jersey</groupId>
-    <artifactId>jersey-json</artifactId>
-    <version>1.17.1</version>
-</dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.17.1</version>
+        </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-servlet</artifactId>
             <version>1.17</version>
         </dependency>
-
-
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>2.2.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
