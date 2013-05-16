@@ -56,7 +56,6 @@ class Application {
         server.setHandler(handlers);
 
 
-
         Thread udpServerThread = new Thread(new UDPServer(8081, injector.getInstance(PacketContentsHandler.class)));
         udpServerThread.start();
 

@@ -7,20 +7,21 @@ import java.util.Map;
 
 @Singleton
 public class StateDatabase {
-    private  HashMap<String, MatchHistory> historyOfMatches = new HashMap<>();
+    private HashMap<String, MatchHistory> historyOfMatches = new HashMap<>();
     private Long lastUpdate = 0l;
 
     public void matched(Long now, String value) {
 
         synchronized (historyOfMatches) {
-               if(historyOfMatches.containsKey(value)){
-                  historyOfMatches.get(value).matchedAgain(now);
-               }   else {
-                   historyOfMatches.put(value, new MatchHistory(now));
-               }
-           }
+            if (historyOfMatches.containsKey(value)) {
+                historyOfMatches.get(value).matchedAgain(now);
+            } else {
+                historyOfMatches.put(value, new MatchHistory(now));
+            }
+        }
         lastUpdate = now;
     }
+
     public HashMap<String, MatchHistory> copy() {
         synchronized (historyOfMatches) {
             HashMap<String, MatchHistory> hm = new HashMap<>();

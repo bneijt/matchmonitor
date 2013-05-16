@@ -29,11 +29,12 @@ public class BoundedLongArray {
                 size += 1;
             }
         }
-        if(size == 0l) {
+        if (size == 0l) {
             return sum;
         }
         return sum / size;
     }
+
     public Long last() {
         return data[writeIndex];
     }
