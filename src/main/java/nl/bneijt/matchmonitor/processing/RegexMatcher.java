@@ -13,14 +13,23 @@ public class RegexMatcher implements PacketContentsHandler {
     StateDatabase stateDatabase;
 
     public RegexMatcher() {
-        pattern = Pattern.compile("(([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3}))");
+        pattern = Pattern.compile("([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3})");
     }
 
     @Override
     public void apply(String content) {
+
+        String match = match(content);
+        if(match != null) {
+            stateDatabase.matched(System.currentTimeMillis(), match);
+        }
+    }
+
+    public String match(String content) {
         Matcher matcher = pattern.matcher(content);
         if (matcher.find()) {
-            stateDatabase.matched(System.currentTimeMillis(), matcher.group(1));
+            return matcher.group(1);
         }
+        return null;
     }
 }
