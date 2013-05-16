@@ -2,3 +2,5 @@
 dependency-reduced-pom.xml
 matchmonitor.iml
 target
+pom.xml.releaseBackup
+release.properties
