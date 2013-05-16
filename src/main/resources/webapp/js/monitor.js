@@ -24,8 +24,8 @@ function  MonitorCtrl($scope, $http, $timeout) {
 
     $scope.onUpdate = function(){
         $http.get("api/overview")
-                .success(function(response) {storeState(response); $scope.scheduleUpdate()})
-                .error($scope.scheduleUpdate);
+                .success(function(response) {$scope.connectionState = "active"; storeState(response); $scope.scheduleUpdate()})
+                .error(function(response) {$scope.connectionState = "inactive"; $scope.scheduleUpdate()});
     }
 
     var updateTimer = $timeout($scope.onUpdate, 5000);
