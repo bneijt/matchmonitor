@@ -1,8 +1,9 @@
+Matchmonitor
+============
+
 Monitor whether matches keep coming (heartbeats)
 
-__State__: Working UDP server, still needs a configurable matcher because that is now hard-coded at single characters.
-
-__TLDR__: If the match is missing for more than 1.5 times the last interval, it will be colored red.
+__TLDR__: If the match is missing for more than 1.5 times the last interval, it will be colored red. Current version only matches on the first IP address.
 
 Getting started
 ---------------
@@ -14,6 +15,10 @@ Now you need to inject data by posting UDP packets to port 8081. Start `nc -u lo
 
 If you keep up a good interval of, for example, messages with an `a` in them, you should get `a` to turn up normal. Then if you stop, it should turn red indicating the packet _missed it's normal interval_.
 
+Downloads
+---------
+
+You can download complete jar releases here: [https://mega.co.nz/#F!ll8hDJKT!QzHVQVs6tdw1P8a5GdZSWQ](https://mega.co.nz/#F!ll8hDJKT!QzHVQVs6tdw1P8a5GdZSWQ)
 
 Example
 -------
