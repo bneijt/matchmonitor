@@ -15,3 +15,10 @@ Now you need to inject data by posting UDP packets to port 8081. Start `nc -u lo
 If you keep up a good interval of, for example, messages with an `a` in them, you should get `a` to turn up normal. Then if you stop, it should turn red indicating the packet _missed it's normal interval_.
 
 
+Example
+-------
+To send your syslog lines to matchmonitor, you could use:
+
+    tail -f /var/log/syslog | while read x; do echo "$x" | nc -u localhost 8081; done
+
+
