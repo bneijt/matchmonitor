@@ -31,7 +31,7 @@ class Application {
 
         Injector injector = Guice.createInjector(new ApplicationModule());
 
-        Server server = new Server(4000);
+        Server server = new Server(Integer.valueOf(System.getProperty("port", "8080")));
 
         ResourceHandler resource_handler = new ResourceHandler();
         File localResources = new File("src/main/resources/webapp/");
@@ -56,7 +56,7 @@ class Application {
         server.setHandler(handlers);
 
 
-        Thread udpServerThread = new Thread(new UDPServer(8081, injector.getInstance(PacketContentsHandler.class)));
+        Thread udpServerThread = new Thread(new UDPServer(Integer.valueOf(System.getProperty("udpPort", "8081")), injector.getInstance(PacketContentsHandler.class)));
         udpServerThread.start();
 
         try {

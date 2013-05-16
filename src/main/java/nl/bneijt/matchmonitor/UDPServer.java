@@ -25,6 +25,7 @@ public class UDPServer implements Runnable {
     @Override
     public void run() {
         try {
+            logger.info("Starting UDP server on port {}", port);
             DatagramSocket serverSocket = new DatagramSocket(port);
 
             byte[] receiveBuffer = new byte[1024];
