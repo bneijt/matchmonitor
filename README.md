@@ -3,17 +3,19 @@ Matchmonitor
 
 Monitor whether matches keep coming (heartbeats)
 
-__TLDR__: If the match is missing for more than 1.5 times the last interval, it will be colored red. Current version only matches on the first IP address.
+__TLDR__: If the matching IP is missing for more than 1.5 times the last interval it was seen, it will be colored red. Current version only matches on the first IP address in the UDP packet.
 
 Getting started
 ---------------
 It's written in Java and some HTML, requires maven to build.
 
-Run `mvn clean verify` next to the `pom.xml` file. Then `java -jar target/matchmonitor-0.0.1-SNAPSHOT.jar`. If there are no errors, you can visit `localhost:8080` for the homepage. It will poll every 5 seconds but not show much.
+Run one of the releases using `java -jar target/matchmonitor-0.0.2.jar`. If there are no errors, you can visit `http://localhost:8080` for the homepage. The page will update every 5 seconds.
 
-Now you need to inject data by posting UDP packets to port 8081. Start `nc -u localhost 8081` and type any character followed by return. After a few seconds one of the letters you entered will appear.
+Now you need to inject data by posting UDP packets to port 8081. Start `nc -u localhost 8081` and type any IP address followed by return. After a few seconds it should appear on the HTML page.
 
-If you keep up a good interval of, for example, messages with an `a` in them, you should get `a` to turn up normal. Then if you stop, it should turn red indicating the packet _missed it's normal interval_.
+If you keep the same IP address coming in UDP packets at a regular interval, the IP address will turn blue. If `matchmonitor` does not receive the same IP address in 1.5 times the regular interval, it will turn the IP address red.
+
+This means that it warns you if the IP mention _missed it's normal interval_.
 
 Downloads
 ---------
@@ -22,7 +24,7 @@ You can download complete jar releases here: [https://mega.co.nz/#F!ll8hDJKT!QzH
 
 Example
 -------
-To send your syslog lines to matchmonitor, you could use:
+To send your `syslog` lines to `matchmonitor`, you could use:
 
     tail -f /var/log/syslog | while read x; do echo "$x" | nc -u localhost 8081; done
 
