@@ -1,7 +1,7 @@
 function MonitorCtrl($scope, $http, $timeout) {
     $scope.states = [];
     $scope.updates = 0;
-
+    $scope.version = "";
 
     $scope.scheduleUpdate = function () {
         updateTimer = $timeout($scope.onUpdate, 5000);
@@ -40,5 +40,10 @@ function MonitorCtrl($scope, $http, $timeout) {
     $scope.stop = function () {
         $timeout.cancel(updateTimer);
     }
+
+    $http.get("api/manifest")
+        .success(function (response) {
+            $scope.version = "v" + response["Implementation-Version"];
+        });
 
 }

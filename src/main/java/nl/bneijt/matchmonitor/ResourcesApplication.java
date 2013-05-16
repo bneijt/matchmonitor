@@ -2,6 +2,7 @@ package nl.bneijt.matchmonitor;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.google.inject.Injector;
+import nl.bneijt.matchmonitor.resources.ManifestResource;
 import nl.bneijt.matchmonitor.resources.MonitorStateResource;
 
 import javax.ws.rs.core.Application;
@@ -20,6 +21,7 @@ public class ResourcesApplication extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<Class<?>>();
+        s.add(ManifestResource.class);
         s.add(JacksonJaxbJsonProvider.class);
         return s;
     }
