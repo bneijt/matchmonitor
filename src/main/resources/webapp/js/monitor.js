@@ -1,11 +1,13 @@
 function MonitorCtrl($scope, $http, $timeout) {
     $scope.states = [];
-    $scope.updates = 0;
+    var updates = 0;
     $scope.version = "";
+    $scope.connectionState = "...";
+    $scope.connectionStyle = "inactive";
 
     $scope.scheduleUpdate = function () {
         updateTimer = $timeout($scope.onUpdate, 5000);
-        $scope.updates += 1;
+        updates += 1;
     }
 
     function storeState(response) {
@@ -25,12 +27,14 @@ function MonitorCtrl($scope, $http, $timeout) {
     $scope.onUpdate = function () {
         $http.get("api/overview")
             .success(function (response) {
-                $scope.connectionState = "active";
                 storeState(response);
+                $scope.connectionStyle = "inactive";
+                $scope.connectionState = updates + " updates";
                 $scope.scheduleUpdate()
             })
-            .error(function (response) {
-                $scope.connectionState = "inactive";
+            .error(function () {
+                $scope.connectionStyle = "active";
+                $scope.connectionState = "disconnected";
                 $scope.scheduleUpdate()
             });
     }
