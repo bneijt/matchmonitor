@@ -26,6 +26,6 @@ Example
 -------
 To send your `syslog` lines to `matchmonitor`, you could use:
 
-    tail -f /var/log/syslog | while read x; do echo "$x" | nc -u localhost 8081; done
+    tail --follow=name /var/log/syslog --retry | while read x; do echo "$x" | nc -u localhost 8081; done
 
 
