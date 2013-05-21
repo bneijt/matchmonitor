@@ -62,7 +62,7 @@ class Application {
                 .help("UDP packet receiving port");
         parser.addArgument("--historySize")
                 .type(Integer.class)
-                .setDefault(5)
+                .setDefault(30)
                 .help("Number of match intervals to factor into the period calculation");
 
         Namespace arguments = null;
