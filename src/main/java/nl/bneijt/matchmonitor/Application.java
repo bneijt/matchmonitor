@@ -16,9 +16,14 @@ package nl.bneijt.matchmonitor;
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.Namespace;
 import nl.bneijt.matchmonitor.processing.PacketContentsHandler;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -32,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 
 
 class Application {
@@ -43,10 +49,47 @@ class Application {
     }
 
     public static void main(String[] args) throws Exception {
+        ArgumentParser parser = ArgumentParsers.newArgumentParser("matchmonitor")
+                .defaultHelp(true)
+                .description("Light up regularly matching elements on a web GUI");
+        parser.addArgument("--httpPort")
+                .type(Integer.class)
+                .setDefault(8080)
+                .help("HTTP web server port (GUI)");
+        parser.addArgument("--udpPort")
+                .type(Integer.class)
+                .setDefault(8081)
+                .help("UDP packet receiving port");
+
+        Namespace arguments = null;
+        try {
+            arguments = parser.parseArgs(args);
+        } catch (ArgumentParserException e) {
+            parser.handleError(e);
+            System.exit(1);
+        }
+
 
         Injector injector = Guice.createInjector(new ApplicationModule());
 
-        Server server = new Server(Integer.valueOf(System.getProperty("port", "8080")));
+        Server jettyServer = createJettyServer(injector, arguments.getInt("httpPort"));
+
+
+        Thread udpServerThread = new Thread(new UDPServer(Integer.valueOf(arguments.getInt("udpPort")), injector.getInstance(PacketContentsHandler.class)));
+        udpServerThread.start();
+
+        try {
+            jettyServer.start();
+        } catch (Exception e) {
+            logger.error("Server could not be started", e);
+        }
+
+        jettyServer.join();
+        udpServerThread.interrupt();
+    }
+
+    private static Server createJettyServer(Injector injector, int httpPort) throws IOException {
+        Server server = new Server(Integer.valueOf(httpPort));
 
         ResourceHandler resource_handler = new ResourceHandler();
         File localResources = new File("src/main/resources/webapp/");
@@ -69,18 +112,6 @@ class Application {
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context, new DefaultHandler()});
         server.setHandler(handlers);
-
-
-        Thread udpServerThread = new Thread(new UDPServer(Integer.valueOf(System.getProperty("udpPort", "8081")), injector.getInstance(PacketContentsHandler.class)));
-        udpServerThread.start();
-
-        try {
-            server.start();
-        } catch (Exception e) {
-            logger.error("Server could not be started", e);
-        }
-
-        server.join();
-        udpServerThread.interrupt();
+        return server;
     }
 }
