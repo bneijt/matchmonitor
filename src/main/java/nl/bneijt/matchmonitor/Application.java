@@ -60,6 +60,10 @@ class Application {
                 .type(Integer.class)
                 .setDefault(8081)
                 .help("UDP packet receiving port");
+        parser.addArgument("--historySize")
+                .type(Integer.class)
+                .setDefault(5)
+                .help("Number of match intervals to factor into the period calculation");
 
         Namespace arguments = null;
         try {
@@ -70,7 +74,7 @@ class Application {
         }
 
 
-        Injector injector = Guice.createInjector(new ApplicationModule());
+        Injector injector = Guice.createInjector(new ApplicationModule(arguments));
 
         Server jettyServer = createJettyServer(injector, arguments.getInt("httpPort"));
 
