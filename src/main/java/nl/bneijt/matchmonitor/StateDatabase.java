@@ -1,5 +1,6 @@
 package nl.bneijt.matchmonitor;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import java.util.HashMap;
@@ -10,13 +11,16 @@ public class StateDatabase {
     private HashMap<String, MatchHistory> historyOfMatches = new HashMap<>();
     private Long lastUpdate = 0l;
 
+    @Inject
+    MatchHistoryFactory matchHistoryFactory;
+
     public void matched(Long now, String value) {
 
         synchronized (historyOfMatches) {
             if (historyOfMatches.containsKey(value)) {
                 historyOfMatches.get(value).matchedAgain(now);
             } else {
-                historyOfMatches.put(value, new MatchHistory(now));
+                historyOfMatches.put(value, matchHistoryFactory.newDefaultInstance(now));
             }
         }
         lastUpdate = now;

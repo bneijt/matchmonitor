@@ -9,7 +9,7 @@ public class MatchHistoryTest {
     @Test
     public void aSingleValueShouldNotBeInsideHalfMean() throws Exception {
         long factor = 100000000l;
-        MatchHistory mh = new MatchHistory(0l);
+        MatchHistory mh = new MatchHistory(0l, 5);
         mh.matchedAgain(100l * factor);
         mh.matchedAgain(200l * factor);
         mh.matchedAgain(300l * factor);

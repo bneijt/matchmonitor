@@ -10,5 +10,6 @@ public class ApplicationModule extends AbstractModule {
     protected void configure() {
         bind(StateDatabase.class).toInstance(new StateDatabase());
         bind(PacketContentsHandler.class).to(RegexMatcher.class);
+        bind(MatchHistoryFactory.class).toInstance(new MatchHistoryFactory(5));
     }
 }

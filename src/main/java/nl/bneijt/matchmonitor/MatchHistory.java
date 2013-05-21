@@ -4,9 +4,9 @@ public class MatchHistory {
     private Long lastMatched;
     private BoundedLongArray intervalHistory;
 
-    public MatchHistory(Long now) {
+    public MatchHistory(Long now, int historySize) {
         lastMatched = now;
-        intervalHistory = new BoundedLongArray(5);
+        intervalHistory = new BoundedLongArray(historySize);
     }
 
     public MatchHistory(MatchHistory other) {
@@ -14,6 +14,7 @@ public class MatchHistory {
         intervalHistory = new BoundedLongArray(other.intervalHistory);
 
     }
+
 
     public void matchedAgain(Long now) {
         Long newInterval = now - lastMatched;
