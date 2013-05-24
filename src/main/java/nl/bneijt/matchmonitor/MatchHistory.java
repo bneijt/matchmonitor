@@ -1,8 +1,8 @@
 package nl.bneijt.matchmonitor;
 
 public class MatchHistory {
-    private Long lastMatched;
-    private BoundedLongArray intervalHistory;
+    protected Long lastMatched;
+    protected BoundedLongArray intervalHistory;
 
     public MatchHistory(Long now, int historySize) {
         lastMatched = now;
@@ -25,5 +25,12 @@ public class MatchHistory {
     public boolean insideHalfMean(Long now) {
         return (now - lastMatched) < (1.5 * intervalHistory.mean());
     }
-
+    public boolean insideQuadrupalVarience(Long now) {
+        Long currentInterval = (now - lastMatched);
+        Long currentInterval2 = (currentInterval * currentInterval);
+        Long mu = intervalHistory.mean();
+        Long mu2 = (mu * mu);
+        Long var = intervalHistory.variance(mu);
+        return currentInterval2 <= (mu2 + 4 * var);
+    }
 }

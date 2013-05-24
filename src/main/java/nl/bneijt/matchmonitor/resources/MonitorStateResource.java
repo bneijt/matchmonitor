@@ -34,7 +34,7 @@ public class MonitorStateResource {
         for (Map.Entry<String, MatchHistory> entry : states.entrySet()) {
             State s = new State();
             s.match = entry.getKey();
-            s.alive = entry.getValue().insideHalfMean(now);
+            s.alive = entry.getValue().insideQuadrupalVarience(now);
             ms.states.add(s);
         }
         ms.lastUpdate = stateDatabase.lastUpdate();

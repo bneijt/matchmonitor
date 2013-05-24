@@ -20,7 +20,7 @@ function MonitorCtrl($scope, $http, $timeout) {
             }
             return state;
         });
-
+        $scope.states.sort(function(a, b){ if(a.length != b.length) return a.length - b.length; return a > b;})
         $scope.lastUpdate = response.lastUpdate;
     }
 

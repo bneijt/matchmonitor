@@ -39,4 +39,24 @@ public class BoundedLongArray {
         return data[writeIndex];
     }
 
+    /**
+     * Calculate the variance given a mean
+     * @param mu the mean used to calculate the variance. You probably want to use this.mean() for that.
+     * @return
+     */
+    public Long variance(Long mu) {
+        Long var = 0l;
+        Long size = 0l;
+
+        for(Long d : data) {
+            if (d != null) {
+                var += (d - mu) * (d - mu);
+                size += 1;
+            }
+        }
+        if (size == 0l) {
+            return var;
+        }
+        return var / size;
+    }
 }
