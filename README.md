@@ -35,6 +35,6 @@ Example
 -------
 To send your `syslog` lines to `matchmonitor`, you could use:
 
-    tail --follow=name /var/log/syslog --retry | while read x; do echo "$x" | nc -u localhost 8081; done
+    tail --follow=name /var/log/syslog --retry | while read x; do echo "$x" | socat - udp-sendto:127.0.0.1:8081; done
 
 
