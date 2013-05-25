@@ -4,7 +4,7 @@
 
     <groupId>nl.bneijt</groupId>
     <artifactId>matchmonitor</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <description>Web GUI to monitor UDP packet frequency</description>
 
     <properties>
@@ -16,7 +16,7 @@
     </properties>
     <scm>
         <connection>scm:git:git://example.com</connection>
-        <tag>matchmonitor-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <dependencies>
         <dependency>
