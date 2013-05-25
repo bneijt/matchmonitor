@@ -64,6 +64,9 @@ class Application {
                 .type(Integer.class)
                 .setDefault(30)
                 .help("Number of match intervals to factor into the period calculation");
+        parser.addArgument("--conf")
+                .type(String.class)
+                .help("Yaml configuration file with regexes list containing regular expressions to match. Default matching is ip addresses.");
 
         Namespace arguments = null;
         try {

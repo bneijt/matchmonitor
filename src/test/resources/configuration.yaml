@@ -1,0 +1,4 @@
+#Example regular expressions, first is 
+regexes:
+    - ([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})
+    - ([a-zA-Z]+ CRON)
